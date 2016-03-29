@@ -9,16 +9,17 @@ class Matrice:
   self.__mismatch = mismatch
   self.__gap = gap
   
- #initialise la matrice à zero 
- def initZero(shape):
+ #initialise la matrice a zero
+ def initZero(self, shape):
   self.__mt = []
   for x in range(shape[0]):               #nombre de ligne m de la matrice (m,n)
    self.__mt.append([])
   for y in range(shape[1]):
-   self.__mt[-1].append(0)
+   for z in range(shape[1]):
+    self.__mt[-1-y].append(0)
   return self.__mt
   
- def match_score(alpha, beta):
+ def match_score(self, alpha, beta):
   if alpha == beta:
    return self.__match
   elif alpha == '-' or beta == '-':
@@ -27,7 +28,7 @@ class Matrice:
    return self.__mismatch
 	
  #retourne la sequence 1 et 2
- def finalize(align1, align2):
+ def finalize(self, align1, align2):
   align1 = align1[::-1] 
   align2 = align2[::-1] 
   
@@ -64,13 +65,13 @@ class Matrice:
    print(symbol)
    print(align2)
 	 
- def needle():
+ def needle(self):
   m = len(self.__s1)
   n = len(self.__s2)
   
   #Generate DP table and traceback path pointer matrix
-  score = initZero((m+1, n+1)) # the DP table
-	
+  score = self.initZero((m+1, n+1))
+  print score
   # Calculate DP table
   for i in range(0, m + 1):
    score[i][0] = self.__gap * i
@@ -78,7 +79,7 @@ class Matrice:
    score[0][j] = self.__gap * j
   for i in range(1, m + 1):
    for j in range(1, n + 1):
-    diag = score[i-1][j-1] + match_score(seq1[i-1], seq2[j-1])
+    diag = score[i-1][j-1] + self.match_score(seq1[i-1], seq2[j-1])
     up = score[i-1][j] + self.__gap
     left = score[i][j-1] + self.__gap
     score[i][j] = max(diag, up, left)	
@@ -86,7 +87,7 @@ class Matrice:
   #Traceback and compute the alignment
   #parcour par programmation dynamike 
   align1, align2 = '', ''
-  i,j = m,n                      #parcour de la matrice d'en bas a droite à en haut à gauche
+  i,j = m,n
   while i > 0 and j > 0: 
    score_current = score[i][j]
    score_diagonal = score[i-1][j-1]
@@ -117,11 +118,11 @@ class Matrice:
    align2 += self.__s2[j-1]
    j -= 1
 	
-  finalize(align1, align2)
+  self.finalize(align1, align2)
   
   
   
 seq1 = "ACTG"
 seq2 = "CTTG"
 matrice = Matrice(seq1,seq2,4,-4,-4)
-matrice.needle(seq1,seq2)
+matrice.needle()
