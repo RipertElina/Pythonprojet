@@ -1,18 +1,10 @@
 '''TO DO 
-Faire la boucle pour le menu
-import os 
-Ajouter la priorité diag dans l'alignement'''
-
-import os
+Ajouter la priorité diag dans l'alignement
+Dans matrice mettre sequence a vide et faire setter '''
 from matrice import Matrice
 
-# seq1 = "ACTG"
-# seq2 = "CTTG"
-# matrice = Matrice(seq1,seq2)
-# matrice.needle()
-
-# exit()
 def menu() : 
+ 
  print("Bonjour, bienvenue dans l'outil d'alignement needle\n Menu principal : choississez une rubrique\n")
  print("1. Visualiser les scores\n")
  print("2. Changer les scores\n")
@@ -48,9 +40,11 @@ def menu() :
 
 #Fonction permettant d'afficher les scores actuelles 
 def affScore() : 
+
  seq1 = "ACTG"
  seq2 = "CTTG"
  matrice = Matrice(seq1,seq2)
+
  print("Score de match : "+str(matrice.getMatch())+"\n")
  print("Score de gap : "+str(matrice.getGap())+"\n")
  print("Score de missmatch : "+str(matrice.getMiss())+"\n")
