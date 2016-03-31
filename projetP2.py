@@ -2,18 +2,11 @@ import numpy
 outFileRes = open("outFileRes.txt","w")
 
 class Matrice:
-	#Definition de la classe matrice avec une matrice, deux sequences, les scores de match, mismatch et gap
+  #Definition de la classe matrice avec une matrice, deux sequences, les scores de match, mismatch et gap
  def __init__(self,s1,s2):
   self.__mt = []
   self.__s1 = s1
   self.__s2 = s2
-<<<<<<< HEAD
-  self.__match = match
-  self.__mismatch = mismatch
-  self.__gap = gap
-  
- #initialise la matrice a zero
-=======
   self.__match = 4
   self.__mismatch = -4
   self.__gap = -4
@@ -21,22 +14,21 @@ class Matrice:
 
  #getter
  def getMatch(self) : 
- 	return self.__match
+  return self.__match
  def getGap(self) : 
- 	return self.__gap
+  return self.__gap
  def getMiss(self) : 
- 	return self.__mismatch
+  return self.__mismatch
 
  #setter 
  def setMatch(self,x) : 
- 	self.__match = x
+  self.__match = x
  def setGap(self,x) : 
- 	self.__gap = x	
+  self.__gap = x  
  def setMiss(self,x) : 
- 	self.__mismatch = x
+  self.__mismatch = x
 
  #initialise la matrice (m,n) a zero
->>>>>>> test
  def initZero(self, shape):
   self.__mt = []
   #Ligne
@@ -47,12 +39,8 @@ class Matrice:
    for z in range(shape[1]):
     self.__mt[-1-y].append(0)
   return self.__mt
-<<<<<<< HEAD
-  
-=======
  
  #Renvoie le score si deux entitées sont egales (match), sinon gap, sinon mismatch 
->>>>>>> test
  def match_score(self, alpha, beta):
   if alpha == beta:
    return self.__match
@@ -60,7 +48,7 @@ class Matrice:
    return self.__gap
   else:
    return self.__mismatch
-	
+  
  #retourne la sequence 1 et 2
  def finalize(self, align1, align2):
   align1 = align1[::-1] 
@@ -99,24 +87,15 @@ class Matrice:
    outFileRes.write("Sequence 1     : "+align1+"\n")
    outFileRes.write("Correspondance : "+symbol+"\n")
    outFileRes.write("Sequence 2     :"+align2+"\n")
-	 
-<<<<<<< HEAD
-=======
-	#Rempli la matrice avec les bon scores 
->>>>>>> test
+   
+  #Rempli la matrice avec les bon scores 
  def needle(self):
   m = len(self.__s1)
   n = len(self.__s2)
   
-<<<<<<< HEAD
-  #Generate DP table and traceback path pointer matrix
-  score = self.initZero((m+1, n+1))
-  # Calculate DP table
-=======
   #Genere la matrice par programmation dynamique et le chemin de traceback
   score = self.initZero((m+1, n+1))
   #Calcul de la matrice
->>>>>>> test
   for i in range(0, m + 1):
    score[i][0] = self.__gap * i
   for j in range(0, n + 1):
@@ -126,21 +105,14 @@ class Matrice:
     diag = score[i-1][j-1] + self.match_score(self.__s1[i-1], self.__s2[j-1])
     up = score[i-1][j] + self.__gap
     left = score[i][j-1] + self.__gap
-    score[i][j] = max(diag, up, left)	
+    score[i][j] = max(diag, up, left) 
 
-	
-<<<<<<< HEAD
-  #Traceback and compute the alignment
-  #parcour par programmation dynamike 
-  align1, align2 = '', ''
-  i,j = m,n
-=======
+  
   #Taceback et calcul l'alignement
   align1 = ''
   align2 = ''
   i = m
   j = n
->>>>>>> test
   while i > 0 and j > 0: 
    score_current = score[i][j]
    score_diagonal = score[i-1][j-1]
@@ -152,6 +124,33 @@ class Matrice:
     align2 += self.__s2[j-1]
     i -= 1
     j -= 1
+
+   elif score_current == score_left + self.__gap:
+    align1 += self.__s1[i-1]
+    align2 += '-'
+    i -= 1
+   elif score_current == score_up + self.__gap:
+    align1 += '-'
+    align2 += self.__2[j-1]
+    j -= 1
+   
+   while i > 0:
+    align1 += self.__s1[i-1]
+    align2 += '-'
+    i -= 1
+   while j > 0:
+    align1 += '-'
+    align2 += self.__s2[j-1]
+    j -= 1
+  
+   self.finalize(align1, align2)
+  
+  
+seq1 = "ACTG"
+seq2 = "CTTG"
+matrice = Matrice(seq1,seq2)
+matrice.needle()
+outFileRes.close() j -= 1
 
    elif score_current == score_left + self.__gap:
     align1 += self.__s1[i-1]
