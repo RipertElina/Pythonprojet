@@ -150,44 +150,4 @@ seq1 = "ACTG"
 seq2 = "CTTG"
 matrice = Matrice(seq1,seq2)
 matrice.needle()
-outFileRes.close() j -= 1
-
-   elif score_current == score_left + self.__gap:
-    align1 += self.__s1[i-1]
-    align2 += '-'
-    i -= 1
-   elif score_current == score_up + self.__gap:
-    align1 += '-'
-    align2 += self.__2[j-1]
-    j -= 1
-   
-<<<<<<< HEAD
-   # Finish tracing up to the top left cell
-=======
->>>>>>> test
-   while i > 0:
-    align1 += self.__s1[i-1]
-    align2 += '-'
-    i -= 1
-   while j > 0:
-    align1 += '-'
-    align2 += self.__s2[j-1]
-    j -= 1
- 	
-   self.finalize(align1, align2)
-<<<<<<< HEAD
-  
-=======
->>>>>>> test
-  
-  
-seq1 = "ACTG"
-seq2 = "CTTG"
-<<<<<<< HEAD
-matrice = Matrice(seq1,seq2,4,-4,-4)
-matrice.needle()
-=======
-matrice = Matrice(seq1,seq2)
-matrice.needle()
 outFileRes.close()
->>>>>>> test
