@@ -1,5 +1,5 @@
 import numpy
-outFileRes = open("outFileRes.txt","w")
+
 
 class Matrice:
   #Definition de la classe matrice avec une matrice, deux sequences, les scores de match, mismatch et gap
@@ -60,6 +60,8 @@ class Matrice:
   symbol = ''
   score = 0
   identity = 0
+  outFileRes = open("outFileRes.txt","w")
+
   for i in range(0,len(align1)):
    #Si deux AA sont les meme, on aligne 
    if align1[i] == align2[i]:
@@ -83,11 +85,13 @@ class Matrice:
    print(align1)
    print(symbol)
    print(align2)
-   outFileRes.write("Identite       : "+identity+"%\n")
-   outFileRes.write("Sequence 1     : "+align1+"\n")
-   outFileRes.write("Correspondance : "+symbol+"\n")
-   outFileRes.write("Sequence 2     :"+align2+"\n")
-   
+   outFileRes.write("Identite       : "+str(identity)+"%\n")
+   outFileRes.write("Sequence 1     : "+str(align1)+"\n")
+   outFileRes.write("Correspondance : "+str(symbol)+"\n")
+   outFileRes.write("Sequence 2     : "+str(align2)+"\n\n")
+
+  outFileRes.close()
+    
   #Rempli la matrice avec les bon scores 
  def needle(self):
   m = len(self.__s1)
@@ -144,10 +148,3 @@ class Matrice:
     j -= 1
   
    self.finalize(align1, align2)
-  
-  
-seq1 = "ACTG"
-seq2 = "CTTG"
-matrice = Matrice(seq1,seq2)
-matrice.needle()
-outFileRes.close()
