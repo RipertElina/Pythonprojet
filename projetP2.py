@@ -1,24 +1,58 @@
 import numpy
+outFileRes = open("outFileRes.txt","w")
 
 class Matrice:
- def __init__(self,s1,s2,match,mismatch,gap):
+	#Definition de la classe matrice avec une matrice, deux sequences, les scores de match, mismatch et gap
+ def __init__(self,s1,s2):
   self.__mt = []
   self.__s1 = s1
   self.__s2 = s2
+<<<<<<< HEAD
   self.__match = match
   self.__mismatch = mismatch
   self.__gap = gap
   
  #initialise la matrice a zero
+=======
+  self.__match = 4
+  self.__mismatch = -4
+  self.__gap = -4
+
+
+ #getter
+ def getMatch(self) : 
+ 	return self.__match
+ def getGap(self) : 
+ 	return self.__gap
+ def getMiss(self) : 
+ 	return self.__mismatch
+
+ #setter 
+ def setMatch(self,x) : 
+ 	self.__match = x
+ def setGap(self,x) : 
+ 	self.__gap = x	
+ def setMiss(self,x) : 
+ 	self.__mismatch = x
+
+ #initialise la matrice (m,n) a zero
+>>>>>>> test
  def initZero(self, shape):
   self.__mt = []
-  for x in range(shape[0]):               #nombre de ligne m de la matrice (m,n)
+  #Ligne
+  for x in range(shape[0]):               
    self.__mt.append([])
+  #colonne
   for y in range(shape[1]):
    for z in range(shape[1]):
     self.__mt[-1-y].append(0)
   return self.__mt
+<<<<<<< HEAD
   
+=======
+ 
+ #Renvoie le score si deux entitées sont egales (match), sinon gap, sinon mismatch 
+>>>>>>> test
  def match_score(self, alpha, beta):
   if alpha == beta:
    return self.__match
@@ -34,44 +68,55 @@ class Matrice:
   
   i,j = 0,0
   
-  #calcuate identity, score and aligned sequeces
+  #calcul de l'identite, score et rend l'alignement de sequence 
   symbol = ''
-  found = 0
   score = 0
   identity = 0
   for i in range(0,len(align1)):
-   # if two AAs are the same, then output the letter
+   #Si deux AA sont les meme, on aligne 
    if align1[i] == align2[i]:
     symbol = symbol + align1[i]
     identity = identity + 1
     score += self.match_score(align1[i], align2[i])
     
-   # if they are not identical and none of them is gap
+   #Si il y a un mismatch 
    elif align1[i] != align2[i] and align1[i] != '-' and align2[i] != '-':
     score += self.match_score(align1[i], align2[i])
     symbol += ' '
-    found = 0
     
-   #if one of them is a gap, output a space
+   #Si gap, sortie d'un espace
    elif align1[i] == '-' or align2[i] == '-':
     symbol += ' '
     score += self.__gap
-    
-    
+        
    identity = float(identity) / len(align1) * 100
    print(identity)
    print(score)
    print(align1)
    print(symbol)
    print(align2)
+   outFileRes.write("Identite       : "+identity+"%\n")
+   outFileRes.write("Sequence 1     : "+align1+"\n")
+   outFileRes.write("Correspondance : "+symbol+"\n")
+   outFileRes.write("Sequence 2     :"+align2+"\n")
 	 
+<<<<<<< HEAD
+=======
+	#Rempli la matrice avec les bon scores 
+>>>>>>> test
  def needle(self):
   m = len(self.__s1)
   n = len(self.__s2)
   
+<<<<<<< HEAD
   #Generate DP table and traceback path pointer matrix
   score = self.initZero((m+1, n+1))
   # Calculate DP table
+=======
+  #Genere la matrice par programmation dynamique et le chemin de traceback
+  score = self.initZero((m+1, n+1))
+  #Calcul de la matrice
+>>>>>>> test
   for i in range(0, m + 1):
    score[i][0] = self.__gap * i
   for j in range(0, n + 1):
@@ -84,10 +129,18 @@ class Matrice:
     score[i][j] = max(diag, up, left)	
 
 	
+<<<<<<< HEAD
   #Traceback and compute the alignment
   #parcour par programmation dynamike 
   align1, align2 = '', ''
   i,j = m,n
+=======
+  #Taceback et calcul l'alignement
+  align1 = ''
+  align2 = ''
+  i = m
+  j = n
+>>>>>>> test
   while i > 0 and j > 0: 
    score_current = score[i][j]
    score_diagonal = score[i-1][j-1]
@@ -109,7 +162,10 @@ class Matrice:
     align2 += self.__2[j-1]
     j -= 1
    
+<<<<<<< HEAD
    # Finish tracing up to the top left cell
+=======
+>>>>>>> test
    while i > 0:
     align1 += self.__s1[i-1]
     align2 += '-'
@@ -120,10 +176,19 @@ class Matrice:
     j -= 1
  	
    self.finalize(align1, align2)
+<<<<<<< HEAD
   
+=======
+>>>>>>> test
   
   
 seq1 = "ACTG"
 seq2 = "CTTG"
+<<<<<<< HEAD
 matrice = Matrice(seq1,seq2,4,-4,-4)
 matrice.needle()
+=======
+matrice = Matrice(seq1,seq2)
+matrice.needle()
+outFileRes.close()
+>>>>>>> test
