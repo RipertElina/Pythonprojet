@@ -54,25 +54,32 @@ def changeScore(self) :
  matrice.setMiss(mismatch)
 
 #Allignement depuis des sequence prise dans des fichiers externe 
-def AliFile(self) : 
+def AliFile() : 
  print("Bienvenue dans le mode d'alignement de sequence à partir de fichiers d'entres \n")
  matrice = Matrice()
- fichier1 = raw_input("Entrez le nom du fichier comportant la sequence 1 : \n")
+ fichier1 = input("Entrez le nom du fichier comportant la sequence 1 : \n")
  try : 
   seq1File = open(fichier1, "r")
  except : 
   print("Le fichier", fichier1, "est introuvable")
- fichier2 = raw_input("Entrez le nom du fichier comportant la sequence 2 : \n")
+ fichier2 = input("Entrez le nom du fichier comportant la sequence 2 : \n")
  try : 
   seq2File = open(fichier2, "r")
  except : 
   print("Le fichier", fichier2, "est introuvable")
+ 
+ # On lit les fichiers
  seq1 = seq1File.read()
  seq2 = seq2File.read()
+
+ # On set les sequences correspondantes
  matrice.setS1(seq1)
  matrice.setS2(seq2)
+
  print("Lancement de l'alignement \n")
  matrice.needle()
+
+ # On ferme les fichiers en ecriture
  seq1File.close()
  seq2File.close()
 
