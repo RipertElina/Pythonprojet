@@ -1,6 +1,6 @@
 '''TO DO 
-Ajouter la priorité diag dans l'alignement
-Dans matrice mettre sequence a vide et faire setter '''
+Ajouter la priorité diag dans l'alignement'''
+
 from matrice import Matrice
 
 def menu() : 
@@ -36,31 +36,27 @@ def menu() :
   menu()
 
 
-
-
 #Fonction permettant d'afficher les scores actuelles 
 def affScore() : 
-
- seq1 = "ACTG"
- seq2 = "CTTG"
- matrice = Matrice(seq1,seq2)
-
+ matrice = Matrice()
  print("Score de match : "+str(matrice.getMatch())+"\n")
  print("Score de gap : "+str(matrice.getGap())+"\n")
  print("Score de missmatch : "+str(matrice.getMiss())+"\n")
 
 #Fonction permettant de changer des scores
 def changeScore(self) : 
+ matrice = Matrice()
  match = input("Score de match : \n")
  gap = input("Score de gap : \n")
  mismatch = input("Score de mismatch : \n")
- setMatch(match)
- setGap(gap)
- setMiss(mismatch)
+ matrice.setMatch(match)
+ matrice.setGap(gap)
+ matrice.setMiss(mismatch)
 
 #Allignement depuis des sequence prise dans des fichiers externe 
 def AliFile(self) : 
  print("Bienvenue dans le mode d'alignement de sequence à partir de fichiers d'entres \n")
+ matrice = Matrice()
  fichier1 = raw_input("Entrez le nom du fichier comportant la sequence 1 : \n")
  try : 
   seq1File = open(fichier1, "r")
@@ -73,17 +69,23 @@ def AliFile(self) :
   print("Le fichier", fichier2, "est introuvable")
  seq1 = seq1File.read()
  seq2 = seq2File.read()
- needle(seq1,seq2)
+ matrice.setS1(seq1)
+ matrice.setS2(seq2)
+ print("Lancement de l'alignement \n")
+ matrice.needle()
  seq1File.close()
  seq2File.close()
 
 #Alignement depuis des sequences saisit manuellement
 def AliManu(self) : 
  print("Bienvenu dans le mode d'alignement de sequence à partir de la saisie manuelle de vos sequences \n")
- seq1 = raw_input("Saisir le premier sequence \n")
+ matrice = Matrice()
+ seq1 = raw_input("Saisir la premier sequence \n")
  seq2 = raw_input("Saisir la deuxieme sequence \n")
+ matrice.setS1(seq1)
+ matrice.setS2(seq2)
  print("Lancement de l'alignement \n")
- needle(seq1,seq2)
+ needle()
  outFile = open("FichierSortiAlignement.txt",w)
 
 #Lis le fichier de sorti

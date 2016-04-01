@@ -1,12 +1,12 @@
 import numpy
-
+outFileRes = open("outFileRes.txt","w")
 
 class Matrice:
-  #Definition de la classe matrice avec une matrice, deux sequences, les scores de match, mismatch et gap
- def __init__(self):
+	#Definition de la classe matrice avec une matrice, deux sequences, les scores de match, mismatch et gap
+ def __init__(self,s1,s2):
   self.__mt = []
-  self.__s1 = ''
-  self.__s2 = ''
+  self.__s1 = s1
+  self.__s2 = s2
   self.__match = 4
   self.__mismatch = -4
   self.__gap = -4
@@ -14,23 +14,19 @@ class Matrice:
 
  #getter
  def getMatch(self) : 
-  return self.__match
+ 	return self.__match
  def getGap(self) : 
-  return self.__gap
+ 	return self.__gap
  def getMiss(self) : 
-  return self.__mismatch
+ 	return self.__mismatch
 
  #setter 
  def setMatch(self,x) : 
-  self.__match = x
+ 	self.__match = x
  def setGap(self,x) : 
-  self.__gap = x  
+ 	self.__gap = x	
  def setMiss(self,x) : 
-  self.__mismatch = x
- def setS1(self,s) : 
- 	self.__s1 = s
- def setS2(self,s) : 
- 	self.__s2 = s
+ 	self.__mismatch = x
 
  #initialise la matrice (m,n) a zero
  def initZero(self, shape):
@@ -52,7 +48,7 @@ class Matrice:
    return self.__gap
   else:
    return self.__mismatch
-  
+	
  #retourne la sequence 1 et 2
  def finalize(self, align1, align2):
   align1 = align1[::-1] 
@@ -64,8 +60,6 @@ class Matrice:
   symbol = ''
   score = 0
   identity = 0
-  outFileRes = open("outFileRes.txt","w")
-
   for i in range(0,len(align1)):
    #Si deux AA sont les meme, on aligne 
    if align1[i] == align2[i]:
@@ -89,14 +83,12 @@ class Matrice:
    print(align1)
    print(symbol)
    print(align2)
-   outFileRes.write("Identite       : "+str(identity)+"%\n")
-   outFileRes.write("Sequence 1     : "+str(align1)+"\n")
-   outFileRes.write("Correspondance : "+str(symbol)+"\n")
-   outFileRes.write("Sequence 2     : "+str(align2)+"\n\n")
-
-  outFileRes.close()
-    
-  #Rempli la matrice avec les bon scores 
+   outFileRes.write("Identite       : "+identity+"%\n")
+   outFileRes.write("Sequence 1     : "+align1+"\n")
+   outFileRes.write("Correspondance : "+symbol+"\n")
+   outFileRes.write("Sequence 2     :"+align2+"\n")
+	 
+	#Rempli la matrice avec les bon scores 
  def needle(self):
   m = len(self.__s1)
   n = len(self.__s2)
@@ -113,9 +105,9 @@ class Matrice:
     diag = score[i-1][j-1] + self.match_score(self.__s1[i-1], self.__s2[j-1])
     up = score[i-1][j] + self.__gap
     left = score[i][j-1] + self.__gap
-    score[i][j] = max(diag, up, left) 
+    score[i][j] = max(diag, up, left)	
 
-  
+	
   #Taceback et calcul l'alignement
   align1 = ''
   align2 = ''
@@ -150,5 +142,12 @@ class Matrice:
     align1 += '-'
     align2 += self.__s2[j-1]
     j -= 1
-  
+ 	
    self.finalize(align1, align2)
+  
+  
+seq1 = "ACTG"
+seq2 = "CTTG"
+matrice = Matrice(seq1,seq2)
+matrice.needle()
+outFileRes.close()
