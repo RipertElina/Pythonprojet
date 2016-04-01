@@ -95,11 +95,10 @@ def AliFile() :
  # On ferme les fichiers en ecriture
  seq1File.close()
  seq2File.close()
- 
- exit()
+ return
 
 #Alignement depuis des sequences saisit manuellement
-def AliManu(self) : 
+def AliManu() : 
  print("Bienvenu dans le mode d'alignement de sequence à partir de la saisie manuelle de vos sequences \n")
  matrice = Matrice()
  seq1 = input("Saisir la premier sequence \n")
@@ -107,11 +106,12 @@ def AliManu(self) :
  matrice.setS1(seq1)
  matrice.setS2(seq2)
  print("Lancement de l'alignement \n")
- needle()
- outFile = open("FichierSortiAlignement.txt",w)
+ matrice.needle()
+ outFile = open("FichierSortiAlignement.txt", "w")
+ return
 
 #Lis le fichier de sorti
-def outFile(self) :
+def outFile() :
  outFileR = open("FichierSortiAlignement.txt", "r")
  contenu = outFileR.read()
  print(contenu)
