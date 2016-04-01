@@ -55,18 +55,31 @@ def changeScore(self) :
 
 #Allignement depuis des sequence prise dans des fichiers externe 
 def AliFile() : 
+ seq1File = None
+ seq2File = None
+
  print("Bienvenue dans le mode d'alignement de sequence à partir de fichiers d'entres \n")
  matrice = Matrice()
- fichier1 = input("Entrez le nom du fichier comportant la sequence 1 : \n")
+
+ fichier1 = input("Entrez le nom du fichier comportant la sequence 1 : (Defaut : seq1.txt) \n")
+ if(fichier1 == "") :
+  fichier1 = "seq1.txt"
+
  try : 
   seq1File = open(fichier1, "r")
  except : 
-  print("Le fichier", fichier1, "est introuvable")
- fichier2 = input("Entrez le nom du fichier comportant la sequence 2 : \n")
+  print("Le fichier 1 ", fichier1, "est introuvable")
+  AliFile()
+
+ fichier2 = input("Entrez le nom du fichier comportant la sequence 2 : (Defaut : seq2.txt) \n")
+ if(fichier2 == "") :
+  fichier2 = "seq2.txt"
+
  try : 
   seq2File = open(fichier2, "r")
  except : 
-  print("Le fichier", fichier2, "est introuvable")
+  print("Le fichier 2 ", fichier2, "est introuvable")
+  AliFile()
  
  # On lit les fichiers
  seq1 = seq1File.read()
@@ -82,13 +95,15 @@ def AliFile() :
  # On ferme les fichiers en ecriture
  seq1File.close()
  seq2File.close()
+ 
+ exit()
 
 #Alignement depuis des sequences saisit manuellement
 def AliManu(self) : 
  print("Bienvenu dans le mode d'alignement de sequence à partir de la saisie manuelle de vos sequences \n")
  matrice = Matrice()
- seq1 = raw_input("Saisir la premier sequence \n")
- seq2 = raw_input("Saisir la deuxieme sequence \n")
+ seq1 = input("Saisir la premier sequence \n")
+ seq2 = input("Saisir la deuxieme sequence \n")
  matrice.setS1(seq1)
  matrice.setS2(seq2)
  print("Lancement de l'alignement \n")
