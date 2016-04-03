@@ -1,3 +1,14 @@
+'''
+TO DO 
+Faire une matrice de traceback, creer une matrice de talle seq1 et seq2 puis
+quand on calcul le score max, on recupere la val de max genre si c'est diag on dis que c'est D à la position de i,j
+Puis on remonde la traceback pour afficher l'alignement 
+Si diag : deux lettre l'une en face de l'autre, même si elles sont differentes
+Si left : on met un gap sur la seq verticale (la 2) 
+Si right : idem mais avec la seq1
+Et du coup on peux parcoucrir dans le sens qu'on veux pour ecrire l'allignement ;) 
+
+'''
 import numpy
 
 
@@ -10,6 +21,7 @@ class Matrice:
   self.__match = 4
   self.__mismatch = -4
   self.__gap = -4
+  self.__score = None 
 
 
  #getter
@@ -19,6 +31,8 @@ class Matrice:
   return self.__gap
  def getMiss(self) : 
   return self.__mismatch
+ def getScore(self) : 
+  return self.__score
 
  #setter 
  def setMatch(self,x) : 
@@ -31,6 +45,8 @@ class Matrice:
  	self.__s1 = s
  def setS2(self,s) : 
  	self.__s2 = s
+ def setScore(self,score) : 
+  self.__score = score
 
  #initialise la matrice (m,n) a zero
  def initZero(self, shape):
@@ -45,10 +61,10 @@ class Matrice:
   return self.__mt
  
  #Renvoie le score si deux entitées sont egales (match), sinon gap, sinon mismatch 
- def match_score(self, alpha, beta):
-  if alpha == beta:
+ def match_score(self, x, y):
+  if x == y:
    return self.__match
-  elif alpha == '-' or beta == '-':
+  elif x == '-' or y == '-':
    return self.__gap
   else:
    return self.__mismatch
@@ -69,30 +85,24 @@ class Matrice:
   for i in range(0,len(align1)):
    #Si deux AA sont les meme, on aligne 
    if align1[i] == align2[i]:
-    symbol = symbol + align1[i]
+    symbol = symbol + '*'
     identity = identity + 1
-    score += self.match_score(align1[i], align2[i])
     
    #Si il y a un mismatch 
    elif align1[i] != align2[i] and align1[i] != '-' and align2[i] != '-':
-    score += self.match_score(align1[i], align2[i])
-    symbol += ' '
+    symbol += '!'
     
    #Si gap, sortie d'un espace
    elif align1[i] == '-' or align2[i] == '-':
-    symbol += ' '
-    score += self.__gap
+    symbol += '-'
         
    identity = round(float(identity) / len(align1) * 100, 2)
-   print(identity)
-   print(score)
-   print(align1)
-   print(symbol)
-   print(align2)
-   outFileRes.write("Identite       : "+str(identity)+"%\n")
-   outFileRes.write("Sequence 1     : "+str(align1)+"\n")
-   outFileRes.write("Correspondance : "+str(symbol)+"\n")
-   outFileRes.write("Sequence 2     : "+str(align2)+"\n\n")
+  
+  outFileRes.write("Score          : "+str(self.getScore())+"\n")
+  outFileRes.write("Identite       : "+str(identity)+"%\n")
+  outFileRes.write("Sequence 1     : "+str(align1)+"\n")
+  outFileRes.write("Sequence 2     : "+str(align2)+"\n")
+  outFileRes.write("Correspondance : "+str(symbol)+"\n\n")
 
   outFileRes.close()
     
@@ -114,6 +124,7 @@ class Matrice:
     up = score[i-1][j] + self.__gap
     left = score[i][j-1] + self.__gap
     score[i][j] = max(diag, up, left) 
+  self.setScore(score[i][j])
 
   
   #Taceback et calcul l'alignement
@@ -126,8 +137,11 @@ class Matrice:
    score_diagonal = score[i-1][j-1]
    score_up = score[i][j-1]
    score_left = score[i-1][j]
+   
+   score_match2 = score_current == score_diagonal + self.__match
+   score_match = self.match_score(self.__s1[i-1],self.__s2[j-1])
 
-   if score_current == score_diagonal + self.match_score(self.__s1[i-1],self.__s2[j-1]):
+   if (score_current == (score_diagonal + score_match2)) or (score_current == (score_diagonal + score_match2) and (score_current == (score_left + self.__gap))) or (score_current == (score_diagonal + score_match2) and (score_current == (score_up + self.__gap))) or (score_current == (score_diagonal + score_match2) and (score_current == (score_left + self.__gap)) and (score_current == (score_left + self.__gap))) : 
     align1 += self.__s1[i-1]
     align2 += self.__s2[j-1]
     i -= 1
@@ -142,6 +156,8 @@ class Matrice:
     align2 += self.__2[j-1]
     j -= 1
    
+
+   '''ICI Y A UN PUTAIN DE PROBLEME'''
    while i > 0:
     align1 += self.__s1[i-1]
     align2 += '-'

@@ -6,34 +6,31 @@ matrice = Matrice()
 
 def menu() : 
 
- while True:
-  print("Bonjour, bienvenue dans l'outil d'alignement needle\n Menu principal : choississez une rubrique\n")
-  print("1. Visualiser les scores\n")
-  print("2. Changer les scores\n")
-  print("3. Alignement avec deux fichiers de sequence \n")
-  print("4. Alignement à partir de deux sequences saisit manuellement\n")
-  print("5. Lire l'alignement depuis un fichier de sortie\n")
-  print("6. Quitter\n")
-  choix = input( "Entrez votre choix (1 a 6)  : \n")
-  if choix == "1" : 
-   affScore()
-   print("Retour au menu")
-   menu()
-  elif choix == "2" : 
-   changeScore()
-   print("Retour au menu")
-   menu()
-  elif choix == "3" : 
-   AliFile()
-  elif choix == "4" : 
-   AliManu()
-  elif choix == "5" : 
-   outFile()
-  elif choix == "6" : 
-   exit(0)
-  else : 
-   print("Votre choix n'existe pas, veuillez saisir un nombre en 1 a 6 : \n")
-   menu()
+ print("Bonjour, bienvenue dans l'outil d'alignement needle\n Menu principal : choississez une rubrique\n")
+ print("1. Visualiser les scores\n")
+ print("2. Changer les scores\n")
+ print("3. Alignement avec deux fichiers de sequence \n")
+ print("4. Alignement à partir de deux sequences saisit manuellement\n")
+ print("5. Lire l'alignement depuis un fichier de sortie\n")
+ print("6. Quitter\n")
+ choix = input( "Entrez votre choix (1 a 6)  : \n")
+ if choix == "1" : 
+  affScore()
+  print("Retour au menu")
+  menu()
+ elif choix == "2" : 
+  changeScore()
+ elif choix == "3" : 
+  AliFile()
+ elif choix == "4" : 
+  AliManu()
+ elif choix == "5" : 
+  outFile()
+ elif choix == "6" : 
+  exit(0)
+ else : 
+  print("Votre choix n'existe pas, veuillez saisir un nombre en 1 a 6 : \n")
+  menu()
 
 
 #Fonction permettant d'afficher les scores actuelles 
@@ -118,7 +115,7 @@ def AliFile() :
 
 #Alignement depuis des sequences saisit manuellement
 def AliManu() : 
- print("Bienvenu dans le mode d'alignement de sequence à partir de la saisie manuelle de vos sequences \n")
+ print("Bienvenue dans le mode d'alignement de sequence à partir de la saisie manuelle de vos sequences \n")
  seq1 = input("Saisir la premier sequence \n")
  seq2 = input("Saisir la deuxieme sequence \n")
  matrice.setS1(seq1)
@@ -134,4 +131,5 @@ def outFile() :
  print(contenu)
  outFileR.close()
 
-menu()
+while True:
+ menu()
