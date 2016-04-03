@@ -22,11 +22,11 @@ class Matrice:
 
  #setter 
  def setMatch(self,x) : 
-  self.__match = x
+  self.__match = int(x)
  def setGap(self,x) : 
-  self.__gap = x  
+  self.__gap = int(x)  
  def setMiss(self,x) : 
-  self.__mismatch = x
+  self.__mismatch = int(x)
  def setS1(self,s) : 
  	self.__s1 = s
  def setS2(self,s) : 
@@ -83,7 +83,7 @@ class Matrice:
     symbol += ' '
     score += self.__gap
         
-   identity = float(identity) / len(align1) * 100
+   identity = round(float(identity) / len(align1) * 100, 2)
    print(identity)
    print(score)
    print(align1)
