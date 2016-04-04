@@ -1,4 +1,4 @@
-from matrice import Matrice
+from matrice2 import Matrice
 matrice = Matrice()
 
 def menu() : 

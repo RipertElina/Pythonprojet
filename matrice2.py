@@ -132,13 +132,13 @@ class Matrice:
   #Calcul de la matrice
   traceback[0][0] = "Done"
   #colonnes
-  for i in range(0, m + 1):
+  for i in range(0, m):
    scoreMt[i][0] = self.__gap * i
-   traceback[i+1][0] = "L" 
+   traceback[i+1][0] = "L"
   #Lignes
-  for j in range(0, n + 1):
+  for j in range(0, n):
    scoreMt[0][j] = self.__gap * j
-   traceback[j+1][0] = "U"
+   traceback[0][j+1] = "U"
   for i in range(1, m + 1):
    for j in range(1, n + 1):
     diag = scoreMt[i-1][j-1] + self.match_score(self.__s1[i-1], self.__s2[j-1])
@@ -152,29 +152,29 @@ class Matrice:
     	traceback[i][j] = "U"
     elif val == left : 
     	traceback[i][j] = "L"
-
-  self.setScore(score[i][j])
+  self.setScore(scoreMt[i][j])
 
   #Taceback et calcul l'alignement
   align1 = ''
   align2 = ''
   i = m
   j = n
-  while traceback[i][j] != "Done" : 
+  while traceback[i][j] != "Done" :
+   if traceback[i][j] == "D" : 
 
-   if traceback[i][j] == "D" :  
     align1 += self.__s1[i-1]
     align2 += self.__s2[j-1]	
     i -= 1
     j -= 1
 
    elif traceback[i][j] == "U" : 
+
     align1 += '-'
-    align2 += self.__2[j-1]
+    align2 += self.__s2[j-1]
     j -= 1
 
    elif traceback[i][j] == "L" : 
-   	align1 += self.__s1[i-1]
+    align1 += self.__s1[i-1]
     align2 += '-'
     i -= 1
    
