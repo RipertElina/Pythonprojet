@@ -127,15 +127,14 @@ def AliManu() :
  seq1 = input("Saisir la premier sequence \n")
  seq2 = input("Saisir la deuxieme sequence \n")
 
- reg=re.compile('^[a-zA-Z]+$')
-
- if len(seq1) == len(seq2) and reg.match(seq1) != None and reg.match(seq2) != None:
+ reg=re.compile('^[acdefghikllmnpqrstvwyACDEFGHIKLMNPQRSTVWY]+$')
+ if reg.match(seq1) != None and reg.match(seq2) != None:
   matrice.setS1(seq1)
   matrice.setS2(seq2)
   print("Lancement de l'alignement \n")
   matrice.needle() 
  else :
-  print("\n** Veuillez saisir deux séquences de longueur identique **\n")
+  print("\n** Veuillez saisir deux séquences correcte **\n")
   AliManu()
  return
 

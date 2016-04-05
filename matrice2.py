@@ -51,9 +51,9 @@ class Matrice:
  def setExt(self,e) : 
   self.__extension = e
  def setS1(self,s) : 
-    self.__s1 = s
+    self.__s1 = s.upper
  def setS2(self,s) : 
-    self.__s2 = s
+    self.__s2 = s.uppers
  def setScore(self,score) : 
   self.__score = score
 
@@ -65,18 +65,19 @@ class Matrice:
   for x in range(shape[0]):               
    self.__mt.append([])
   #colonne
-  for y in range(shape[1]):
+  for y in range(shape[0]):
    for z in range(shape[1]):
     self.__mt[-1-y].append(0)
   return self.__mt
 
  def initZeroTB(self, shape):
+  print(shape)
   self.__tbMt = []
   #Ligne
   for x in range(shape[0]):
    self.__tbMt.append([])
   #colonne
-  for y in range(shape[1]):
+  for y in range(shape[0]):
    for z in range(shape[1]):
     self.__tbMt[-1-y].append(0)
   return self.__tbMt
@@ -115,10 +116,8 @@ class Matrice:
    elif align1[i] == '-' or align2[i] == '-':
     symbol += '-'
         
-   identity = round(float(identity) / len(align1) * 100, 2)
-  
   outFileRes.write("Score          : "+str(self.getScore())+"\n")
-  outFileRes.write("Identite       : "+str(identity)+"%\n")
+  outFileRes.write("Identite       : "+str(identity)+"\n")
   outFileRes.write("Sequence 1     : "+str(align1)+"\n")
   outFileRes.write("Sequence 2     : "+str(align2)+"\n")
   outFileRes.write("Correspondance : "+str(symbol)+"\n\n")
@@ -133,21 +132,31 @@ class Matrice:
   #Genere la matrice par programmation dynamique et le chemin de traceback
   scoreMt = self.initZero((m+1, n+1))
   traceback = self.initZeroTB((m+1,n+1))
+  print(traceback)
   #Calcul de la matrice
   traceback[0][0] = "Done"
-  #colonnes
-  for i in range(0, m):
+
+  #Colonnes
+  for i in range(0, m + 1):
    scoreMt[i][0] = self.__gap * i
-   traceback[i+1][0] = "L"
+   try:
+    traceback[i+1][0] = "L"
+   except:
+    pass
+
   #Lignes
-  for j in range(0, n):
+  for j in range(0, n + 1):
    scoreMt[0][j] = self.__gap * j
-   traceback[0][j+1] = "U"
+   try:
+    traceback[0][j+1] = "U"
+   except:
+    pass
+
   for i in range(1, m + 1):
    for j in range(1, n + 1):
     diag = scoreMt[i-1][j-1] + self.match_score(self.__s1[i-1], self.__s2[j-1])
-    up = scoreMt[i-1][j] + self.__gap
-    left = scoreMt[i][j-1] + self.__gap
+    up = scoreMt[i][j-1] + self.__gap
+    left = scoreMt[i-1][j] + self.__gap
     extUp = scoreMt[i-1][j] + self.__extension
     extLeft = scoreMt[i][j-1] + self.__extension
     '''Regarder si avant il y a un - si oui, ajour extUp ou extLeft, ca change le score'''
@@ -170,7 +179,6 @@ class Matrice:
    if traceback[i][j] == "D" : 
     align1 += self.__s1[i-1]
     align2 += self.__s2[j-1]  
-    scoreTot +=   
     i -= 1
     j -= 1
 
