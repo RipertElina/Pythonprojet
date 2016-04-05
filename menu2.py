@@ -1,3 +1,5 @@
+import re
+
 from matrice2 import Matrice
 matrice = Matrice()
 
@@ -115,7 +117,9 @@ def AliManu() :
  seq1 = input("Saisir la premier sequence \n")
  seq2 = input("Saisir la deuxieme sequence \n")
 
- if len(seq1) == len(seq2):
+ reg=re.compile('^[a-zA-Z]+$')
+
+ if len(seq1) == len(seq2) and reg.match(seq1) != None and reg.match(seq2) != None:
   matrice.setS1(seq1)
   matrice.setS2(seq2)
   print("Lancement de l'alignement \n")
