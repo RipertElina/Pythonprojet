@@ -51,9 +51,9 @@ class Matrice:
  def setExt(self,e) : 
   self.__extension = e
  def setS1(self,s) : 
-    self.__s1 = s.upper
+    self.__s1 = s.upper()
  def setS2(self,s) : 
-    self.__s2 = s.uppers
+    self.__s2 = s.upper()
  def setScore(self,score) : 
   self.__score = score
 
