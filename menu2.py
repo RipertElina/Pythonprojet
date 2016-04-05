@@ -3,7 +3,7 @@ matrice = Matrice()
 
 def menu() : 
 
- print("Bonjour, bienvenue dans l'outil d'alignement needle\n Menu principal : choississez une rubrique\n")
+ print("\n\nBonjour, bienvenue dans l'outil d'alignement needle\nMenu principal : choississez une rubrique\n")
  print("1. Visualiser les scores\n")
  print("2. Changer les scores\n")
  print("3. Alignement avec deux fichiers de sequence \n")
@@ -80,7 +80,7 @@ def AliFile() :
  try : 
   seq1File = open(fichier1, "r")
  except : 
-  print("Le fichier 1 ", fichier1, "est introuvable")
+  print("** Le fichier 1 ", fichier1, "est introuvable **")
   AliFile()
 
  fichier2 = input("Entrez le nom du fichier comportant la sequence 2 : (Defaut : seq2.txt) \n")
@@ -90,7 +90,7 @@ def AliFile() :
  try : 
   seq2File = open(fichier2, "r")
  except : 
-  print("Le fichier 2 ", fichier2, "est introuvable")
+  print("** Le fichier 2 ", fichier2, "est introuvable **")
   AliFile()
  
  # On lit les fichiers
@@ -114,23 +114,29 @@ def AliManu() :
  print("Bienvenue dans le mode d'alignement de sequence à partir de la saisie manuelle de vos sequences \n")
  seq1 = input("Saisir la premier sequence \n")
  seq2 = input("Saisir la deuxieme sequence \n")
- matrice.setS1(seq1)
- matrice.setS2(seq2)
- print("Lancement de l'alignement \n")
- matrice.needle()
+
+ if len(seq1) == len(seq2):
+  matrice.setS1(seq1)
+  matrice.setS2(seq2)
+  print("Lancement de l'alignement \n")
+  matrice.needle() 
+ else :
+  print("\n** Veuillez saisir deux séquences de longueur identique **\n")
+  AliManu()
  return
 
 #Lis le fichier de sorti
 def outFile() :
  try : 
-  outFileR = open("FichierSortiAlignement.txt", "r")
+  f = open("outFileRes.txt", "r")
+  c = f.read()
+  print("\n",c)
+  f.close()
+
  except : 
-  print("Le fichier de sortie est inreouvable, veillez faire un alignement avant de le consulter")
-  menu()
- for ligne in outFileR : 
-  print(ligne+"\n")
- # On ferme les fichiers
- outFileR.close()
+  print("\n\n** Le fichier de sortie est introuvable, veuillez faire un alignement avant de le consulter **")
+
+ return
 
 while True:
  menu()
