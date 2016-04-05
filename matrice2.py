@@ -9,8 +9,8 @@ Si left : on met un gap sur la seq verticale (la 2)
 Si right : idem mais avec la seq1
 Et du coup on peux parcoucrir dans le sens qu'on veux pour ecrire l'allignement ;) 
 
-
-Voir aussi pour les seq qui ne font pas la même taille 
+Fichier qui peuvent faire des longeurs differentes 
+Extension de gap
 
 '''
 import numpy
@@ -27,7 +27,7 @@ class Matrice:
   self.__mismatch = -4
   self.__gap = -4
   self.__score = None 
-
+  self.__extension = 0.5
 
  #getter
  def getMatch(self) : 
@@ -38,6 +38,8 @@ class Matrice:
   return self.__mismatch
  def getScore(self) : 
   return self.__score
+ def getExt(self) : 
+  return self.__extension
 
  #setter 
  def setMatch(self,x) : 
@@ -46,12 +48,15 @@ class Matrice:
   self.__gap = int(x)  
  def setMiss(self,x) : 
   self.__mismatch = int(x)
+ def setExt(self,e) : 
+  self.__extension = e
  def setS1(self,s) : 
- 	self.__s1 = s
+    self.__s1 = s
  def setS2(self,s) : 
- 	self.__s2 = s
+    self.__s2 = s
  def setScore(self,score) : 
   self.__score = score
+
 
  #initialise la matrice (m,n) a zero
  def initZero(self, shape):
@@ -91,9 +96,8 @@ class Matrice:
   align2 = align2[::-1] 
   i,j = 0,0
   
-  #calcul de l'identite, score et rend l'alignement de sequence 
+  #calcul de l'identite et rend l'alignement de sequence 
   symbol = ''
-  score = 0
   identity = 0
   outFileRes = open("outFileRes.txt","w")
 
@@ -144,14 +148,17 @@ class Matrice:
     diag = scoreMt[i-1][j-1] + self.match_score(self.__s1[i-1], self.__s2[j-1])
     up = scoreMt[i-1][j] + self.__gap
     left = scoreMt[i][j-1] + self.__gap
+    extUp = scoreMt[i-1][j] + self.__extension
+    extLeft = scoreMt[i][j-1] + self.__extension
+    '''Regarder si avant il y a un - si oui, ajour extUp ou extLeft, ca change le score'''
     val = max(diag, up, left)
     scoreMt[i][j] =  val
     if val == diag : 
-    	traceback[i][j] = 'D'
+        traceback[i][j] = 'D'
     elif val == up : 
-    	traceback[i][j] = "U"
+        traceback[i][j] = "U"
     elif val == left : 
-    	traceback[i][j] = "L"
+        traceback[i][j] = "L"
   self.setScore(scoreMt[i][j])
 
   #Taceback et calcul l'alignement
@@ -161,9 +168,9 @@ class Matrice:
   j = n
   while traceback[i][j] != "Done" :
    if traceback[i][j] == "D" : 
-
     align1 += self.__s1[i-1]
-    align2 += self.__s2[j-1]	
+    align2 += self.__s2[j-1]  
+    scoreTot +=   
     i -= 1
     j -= 1
 

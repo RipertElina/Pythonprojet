@@ -36,6 +36,7 @@ def affScore() :
  print("Score de match : "+str(matrice.getMatch())+"\n")
  print("Score de gap : "+str(matrice.getGap())+"\n")
  print("Score de missmatch : "+str(matrice.getMiss())+"\n")
+ print("Score d'extension de gap : "+str(matrice.getExt())+"\n")
 
 #Fonction permettant de changer des scores
 def changeScore() : 
@@ -63,9 +64,18 @@ def changeScore() :
   print("Merci de saisir une valeur correcte")
   changeScore()
 
+ ext = input("Score d'extension de gap : \n")
+
+ try :
+  int(ext)
+ except : 
+  print("Merci de saisir une valeur correcte")
+  changeScore()
+
  matrice.setMatch(match)
  matrice.setGap(gap)
  matrice.setMiss(mismatch)
+ matrice.setExt(ext)
  return
 
 #Allignement depuis des sequence prise dans des fichiers externe 
